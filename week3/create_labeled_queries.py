@@ -49,6 +49,13 @@ queries_df = pd.read_csv(queries_file_name)[['category', 'query']]
 queries_df = queries_df[queries_df['category'].isin(categories)]
 
 # IMPLEMENT ME: Convert queries to lowercase, and optionally implement other normalization, like stemming.
+def normalize(x):
+    words = re.sub(r'[\W_ ]+', ' ', x).lower().split()
+    stemmed_words = [stemmer.stem(word) for word in words]
+    return " ".join(stemmed_words)
+
+
+queries_df['query'] = queries_df['query'].apply(normalize)
 
 # IMPLEMENT ME: Roll up categories to ancestors to satisfy the minimum number of queries per category.
 
